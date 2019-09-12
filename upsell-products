@@ -1,0 +1,191 @@
+/* This code is to add cross selling products with their product handles and product variants. Follow the steps below:
+
+Step 1: Please install a chrome extension called 'ShopifyFD'
+Step 2: After Installation, Follow the steps show in video here: https://drive.google.com/file/d/1BMBbW0mYaelr3FWv_Z_U3GqDUWq1hBb4/view
+
+To Create A new upsell products for any other products, follow these steps as shown in video below:
+https://drive.google.com/file/d/14y5F5yzKX_YsqYiHYxVgtfWfUjqFTnRq/view
+
+So For 1st Upsell Product:
+Namespace: upsell
+key: product1
+and then press toggle helper button and click on 'Get 250 Products'. This will bring all list of products in your store. Select any product from dropdown and press save button in metafield that will be added as upsell product.
+
+For 2nd Upsell Product:
+Namespace: upsell
+key: product2
+Select any product from dropdown and press save button in metafield that will be added as upsell product.
+
+Note: Upsell will remain same every time. Only Key will change as product1, product2, product3, product4 
+
+and for adding upsell variants follow these simple steps:
+
+The approach is same as of adding Upsell products with handle. What you will do is just create a metafield like: http://prntscr.com/ohnv4l
+
+upsell,variant1 = 8018455683 (You can simply add the Variant ID as the value of metafield.  http://prntscr.com/ohnrfw)
+
+Similarly for other variants of products, you can add these:
+upsell,variant2, upsell,variant3, upsell,variant4 
+
+If you pass out the variant id, it then show image and price of the respective variant otherwise, if you don't pass the variants, it will show the default product image and price. I have implemented this condition here. 
+*/ 
+
+/* assign the product handles from meta fields added in the shopify admin to variable */
+{% assign product_handle1 = product.metafields.upsell.product1 %}
+  {% assign product_handle2 = product.metafields.upsell.product2 %}
+  {% assign product_handle3 = product.metafields.upsell.product3 %}
+  {% assign product_handle4 = product.metafields.upsell.product4 %}
+  
+  
+<div class="upsell-products-wrapper">
+<h3>Complete your look with these items:</h3>
+<div class="upsell-products">
+  {% if product_handle1 != blank %}
+  <div class="upsell">
+	{% assign product_variant1 = product.metafields.upsell.variant1 | strip %}
+    {% for variant in all_products[product_handle1].variants %}
+      {% assign a = variant.id | strip %}
+      {% if a == product_variant1 %}
+          {% assign img_url = variant.featured_image | img_url: 'large' %}
+    	  {% assign p_price = variant.price | money %}
+      {% endif %}
+	{% endfor %}
+    <div class="product-image">
+      <a href="{{all_products[product_handle1].url}}">
+        {% if product_variant1 != '' %}
+      		<img src="{{img_url}}"/>
+        {% else %}
+        <img src="{{ all_products[product_handle1].featured_image | img_url: 'large' }}"/>
+        {% endif %}
+      </a>
+    </div>
+    <div class="product-details_desc">
+        <a href="{{all_products[product_handle1].url}}">
+          {{all_products[product_handle1].title}}
+        </a>
+      <div class="price">
+        <div class="prod-price">
+          {% if product_variant1 != '' %}
+      		{{p_price}}
+          {% else %}
+          {{all_products[product_handle1].price | money}}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+  {% if product_handle2 != blank %}
+  <div class="upsell">
+	{% assign product_variant2 = product.metafields.upsell.variant2 | strip %}
+    {% for variant in all_products[product_handle2].variants %}
+      {% assign a = variant.id | strip %}
+      {% if a == product_variant2 %}
+          {% assign img_url = variant.featured_image | img_url: 'large' %}
+    	  {% assign p_price = variant.price | money %}
+      {% endif %}
+	{% endfor %}
+    <div class="product-image">
+      <a href="{{all_products[product_handle2].url}}">
+        {% if product_variant2 != '' %}
+      		<img src="{{img_url}}"/>
+        {% else %}
+        <img src="{{ all_products[product_handle2].featured_image | img_url: 'large' }}"/>
+        {% endif %}
+      
+      </a>
+    </div>
+    <div class="product-details_desc">
+        <a href="{{all_products[product_handle2].url}}">
+          {{all_products[product_handle2].title}}
+        </a>
+      <div class="price">
+        <div class="prod-price">
+          {% if product_variant2 != '' %}
+      		{{p_price}}
+          {% else %}
+          {{all_products[product_handle2].price | money}}
+          {% endif %}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% if product_handle3 != blank %}
+  <div class="upsell">
+    {% assign product_variant3 = product.metafields.upsell.variant3 | strip %}
+    {% for variant in all_products[product_handle3].variants %}
+      {% assign a = variant.id | strip %}
+      {% if a == product_variant3 %}
+          {% assign img_url = variant.featured_image | img_url: 'large' %}
+    	  {% assign p_price = variant.price | money %}
+      {% endif %}
+	{% endfor %}
+    <div class="product-image">
+      <a href="{{all_products[product_handle3].url}}">
+      {% if product_variant3 != '' %}
+      		<img src="{{img_url}}"/>
+        {% else %}
+        <img src="{{ all_products[product_handle3].featured_image | img_url: 'large' }}"/>
+        {% endif %}
+      </a>
+    </div>
+    <div class="product-details_desc">
+        <a href="{{all_products[product_handle3].url}}">
+          {{all_products[product_handle3].title}}
+        </a>
+      <div class="price">
+        <div class="prod-price">
+          {% if product_variant3 != '' %}
+      		{{p_price}}
+          {% else %}
+          {{all_products[product_handle3].price | money}}
+          {% endif %}
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+   {% if product_handle4 != blank %}
+  <div class="upsell">
+	{% assign product_variant4 = product.metafields.upsell.variant4 | strip %}
+    {% for variant in all_products[product_handle4].variants %}
+      {% assign a = variant.id | strip %}
+      {% if a == product_variant4 %}
+          {% assign img_url = variant.featured_image | img_url: 'large' %}
+    	  {% assign p_price = variant.price | money %}
+      {% endif %}
+	{% endfor %}
+    <div class="product-image">
+      <a href="{{all_products[product_handle4].url}}">
+        {% if product_variant4 != '' %}
+      		<img src="{{img_url}}"/>
+        {% else %}
+        <img src="{{ all_products[product_handle4].featured_image | img_url: 'large' }}"/>
+        {% endif %}
+      </a>
+    </div>
+    <div class="product-details_desc">
+      
+        <a href="{{all_products[product_handle4].url}}">
+          {{all_products[product_handle4].title}}
+        </a>
+      
+      <div class="price">
+        <div class="prod-price">
+          {% if product_variant4 != '' %}
+          	{{p_price}}
+          {% else %}
+          	{{all_products[product_handle4].price | money}}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  
+</div>
+</div>
