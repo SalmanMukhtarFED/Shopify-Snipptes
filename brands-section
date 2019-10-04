@@ -1,0 +1,96 @@
+/* creating a logo section with text that shows your clients in a row */
+
+<section class="accolades accolades-{{ section.id }}">
+{% if section.settings.title != blank %}
+  <h2 class="section-title row">{{ section.settings.title }}</h2>
+{% endif %}
+  <ul class="data-table data-table--bordered">
+  {% for block in section.blocks %}
+    <li class="accolade-item">
+      <span class="accolade-item__text">
+        {{block.settings.text}}
+      </span>
+      <span class="accolade-item__images-container">
+        <div>
+          <img src="{{block.settings.image1 | img_url: "300x"}}"><br />
+          <span class="accolade-item__year">{{ block.settings.year1}}</span>
+        </div>
+        {% if block.settings.image2 != blank %}
+        <div>
+          <img src="{{block.settings.image2 | img_url: "300x"}}"><br />
+          <span class="accolade-item__year">{{ block.settings.year2}}</span>
+        </div>
+        {% endif %}
+        {% if block.settings.image3 != blank %}
+        <div>
+          <img src="{{block.settings.image3 | img_url: "300x"}}"><br />
+          <span class="accolade-item__year">{{ block.settings.year3}}</span>
+        </div>
+        {% endif %}
+      </span>
+    </li>
+  {% endfor %}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "Accolades",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Accolades"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "accolade",
+      "name": "Accolade",
+      "settings": [
+        {
+          "id": "text",
+          "label": "Text",
+          "type": "richtext",
+          "default": "<p>Your text</p>"
+        },
+        {
+          "id": "image1",
+          "label": "Brand image 1",
+          "type": "image_picker"
+        },
+        {
+          "id": "year1",
+          "label": "Year",
+          "type": "text",
+          "default": "2018"
+        },
+        {
+          "id": "image2",
+          "label": "Brand image 2",
+          "type": "image_picker"
+        },
+        {
+          "id": "year2",
+          "label": "Year",
+          "type": "text",
+          "default": "2018"
+        },
+        {
+          "id": "image3",
+          "label": "Brand image 3",
+          "type": "image_picker"
+        },
+        {
+          "id": "year3",
+          "label": "Year",
+          "type": "text",
+          "default": "2018"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}
