@@ -1,0 +1,10 @@
+/* this code is to open external links in new window in shopify store. Copy the code below and paste it to theme.js or custom.js file */
+
+var links = document.links;
+for (let i = 0, linksLength = links.length ; i < linksLength ; i++) {
+  if (links[i].hostname !== window.location.hostname) {
+    links[i].target = '_blank';
+    links[i].rel = 'noreferrer noopener';
+  }
+}
+
