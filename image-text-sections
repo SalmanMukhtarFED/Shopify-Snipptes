@@ -1,0 +1,163 @@
+
+<section class="homepage-rich-text-with-image homepage-rich-text-with-image{{ section.id }} index-section no-fouc" data-section-id="{{ section.id }}">
+  
+  
+    {% if section.settings.image_alignment == "left" %}
+    <div class="flex align-left">
+      <div class="image">
+        <img src="{{section.settings.rich_text_image | img_url: 'master'}}"/>
+      </div>
+      <div class="rich-text">
+        {% if section.settings.heading != blank %}
+    <div class="section-title row">
+      <h2>{{ section.settings.heading | escape }}</h2>
+    </div>
+  {% endif %}
+         {{ section.settings.rich_text }}
+         <a href="{{ section.settings.rich_text_link }}">{{ section.settings.button_text }}</a>
+      </div>
+    </div>
+  	{% else %}
+  	<div class="flex align-right">
+      <div class="image">
+        <img src="{{section.settings.rich_text_image | img_url: 'master'}}"/>
+      </div>
+      <div class="rich-text">
+        {% if section.settings.heading != blank %}
+    <div class="section-title row">
+      <h2>{{ section.settings.heading | escape }}</h2>
+    </div>
+  {% endif %}
+         {{ section.settings.rich_text }}
+         <a href="{{ section.settings.rich_text_link }}">{{ section.settings.button_text }}</a>
+      </div>
+    </div>
+    {% endif %}
+  
+</section>
+<div class="clear"></div>
+
+<style>
+  section.homepage-rich-text-{{ section.id }} {
+    background: {{ section.settings.background_color }};
+  }
+  section.homepage-rich-text-{{ section.id }} h2 {
+    color: {{ section.settings.heading_color }} !important;
+    border-color: {{ section.settings.heading_color }} !important;
+  }
+  section.homepage-rich-text-with-image .flex {
+    display: flex;
+    flex-direction: row;
+}
+  section.homepage-rich-text-with-image{
+    padding:80px 0;
+  }
+   section.homepage-rich-text-with-image .image {
+    flex-basis: 50%;
+}
+  section.homepage-rich-text-with-image .flex.align-right {
+    flex-direction: row-reverse;
+}
+  section.homepage-rich-text-with-image .image img{
+    width: 100%;
+  }
+   section.homepage-rich-text-with-image .rich-text {
+    padding: 80px;
+    max-width: 600px;
+    margin: 0 auto;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+  section.homepage-rich-text-with-image .rich-text p {
+    font-size: 22px;
+    line-height: 55px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: #000;
+}
+  section.homepage-rich-text-with-image a{
+      display: inline-block;
+    width: 100%;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1;
+    text-decoration: underline;
+    font-size: 14px;
+}
+</style>
+
+
+{% schema %}
+{
+  "name": "Rich text With Image",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Welcome"
+    },
+	{
+      "type": "image_picker",
+      "id": "rich_text_image",
+      "label": "Rich Text Image"
+    },
+	{
+   "type":      "radio",
+   "id":        "image_alignment",
+   "label":     "Image Alignment",
+   "options": [
+     { "value": "left", "label": "Left" },
+     { "value": "right", "label": "Right" }
+   ],
+   "default":   "left"
+},
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#fff"
+    },
+    {
+      "id": "rich_text_link",
+      "type": "url",
+      "label": "Link to Collection"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "CTA Button Text",
+      "default": "Shop Now"
+    },
+    {
+    	"type": "richtext",
+    	"id": "rich_text",
+    	"label": "Text",
+    	"info": "Use basic HTML to format text",
+    	"default": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    
+    {
+      "type": "page",
+      "id": "page",
+	  "label": "Or Show content from a page"
+    }
+
+  ],
+   "presets":[
+      {
+       "name":"Rich text With Image",
+       "category":"Text"
+
+	  }
+   ]
+}
+{% endschema %}
